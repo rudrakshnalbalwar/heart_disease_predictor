@@ -8,7 +8,7 @@ import joblib
 import warnings
 warnings.filterwarnings('ignore')
 
-def create_simple_robust_model():
+def create_model():
     """Create a simple but robust model that generalizes well."""
     
     # Load data
@@ -72,11 +72,10 @@ def create_simple_robust_model():
     print("\nTop 10 Most Important Features:")
     print(feature_importance.head(10))
     
-    # Save model
-    joblib.dump(rf_model, 'corrected_model.joblib')
-    joblib.dump(scaler, 'corrected_scaler.joblib')
-    joblib.dump(feature_names, 'corrected_features.joblib')
-    
+    # Save model (using original file names)
+    joblib.dump(rf_model, 'heart_model.joblib')
+    joblib.dump(scaler, 'heart_scaler.joblib')
+
     print("\nCorrected model saved!")
     return rf_model, scaler
 
@@ -84,9 +83,9 @@ def predict_corrected(input_data, feature_names):
     """Make predictions using the corrected model."""
     
     # Load models
-    model = joblib.load('corrected_model.joblib')
-    scaler = joblib.load('corrected_scaler.joblib')
-    
+    model = joblib.load('heart_model.joblib')
+    scaler = joblib.load('heart_scaler.joblib')
+
     # Create DataFrame
     df = pd.DataFrame([input_data], columns=feature_names)
     
@@ -97,4 +96,4 @@ def predict_corrected(input_data, feature_names):
     return risk_probability
 
 if __name__ == "__main__":
-    model, scaler = create_simple_robust_model()
+    model, scaler = create_model()
